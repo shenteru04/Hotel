@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard | Hotel Management System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="dashboard_receptionist.html" class="logo">HotelMS</a>
+                <div class="user-menu">
+                    <span id="profileName"></span>
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <button id="logoutBtn" class="btn btn-sm btn-danger">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard_receptionist.html" class="active">Dashboard</a></li>
+                <li><a href="reservation.html">Reservations</a></li>
+                <li><a href="billing.html">Billing</a></li>
+                <li><a href="#">Room Management</a></li>
+                <li><a href="#">Walk-in Guests</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <h1>Receptionist Dashboard</h1>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Today's Arrivals</h2>
+                    <button class="btn btn-primary">Check In All</button>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Reservation ID</th>
+                                <th>Guest Name</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todaysArrivals">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h2>Today's Departures</h2>
+                    <button class="btn btn-primary">Check Out All</button>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Reservation ID</th>
+                                <th>Guest Name</th>
+                                <th>Room</th>
+                                <th>Check-out</th>
+                                <th>Balance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todaysDepartures">
+                            <!-- Filled by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/reservation.js"></script>
+</body>
+</html>

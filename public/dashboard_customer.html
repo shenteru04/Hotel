@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Dashboard | Hotel Management System</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Additional styles for reservation table */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table th,
+    .table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+    }
+
+    .table th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .table tr:hover {
+      background-color: #f9fafb;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    /* BADGE STYLES */
+    .badge {
+      display: inline-block;
+      padding: 0.4em 0.75em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      border-radius: 999px;
+      text-transform: capitalize;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .badge-success {
+      background-color: #198754;
+    }
+
+    .badge-warning {
+      background-color: #ffc107;
+      color: #212529;
+    }
+
+    .badge-danger {
+      background-color: #dc3545;
+    }
+
+    .badge-secondary {
+      background-color: #6c757d;
+    }
+
+    /* BUTTON STYLES */
+    .btn-sm {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+      margin-right: 0.25rem;
+    }
+
+    .btn-sm:hover {
+      background-color: #2d85c8;
+      transform: translateY(-1px);
+    }
+
+    .btn-sm:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+    }
+
+    /* UTILITIES */
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #6c757d;
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mt-4 {
+      margin-top: 1.75rem;
+    }
+
+    /* Avatar styles */
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #3498db;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    /* Alert styles */
+    .alert {
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid transparent;
+      border-radius: 0.25rem;
+    }
+
+    .alert-danger {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+
+    .alert-success {
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+
+    .alert-info {
+      color: #0c5460;
+      background-color: #d1ecf1;
+      border-color: #bee5eb;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 8px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #374151;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6b7280;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .modal-close:hover {
+      background-color: #f3f4f6;
+      color: #374151;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-body p {
+      margin: 0 0 0.75rem 0;
+      line-height: 1.5;
+    }
+
+    .modal-body p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="dashboard_customer.html" class="logo">HotelMS</a>
+        <div class="user-menu">
+          <span id="profileName" class="user-name"></span>
+          <div class="user-avatar" id="userAvatar">👤</div>
+          <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li><a href="dashboard_customer.html" class="active">🏠 Dashboard</a></li>
+        <li><a href="#" id="profileLink">🙍‍♂️ My Profile</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <section class="welcome-section">
+        <h1>Welcome back, <span id="welcomeName">Guest</span>!</h1>
+        <p>Manage your reservations, payments, and profile all in one place.</p>
+      </section>
+
+      <!-- Upcoming Reservations -->
+      <section class="card">
+        <div class="card-header flex-between">
+          <h2>Upcoming Reservations</h2>
+          <button id="newReservationBtn" class="btn btn-primary">+ New Reservation</button>
+        </div>
+        <div class="card-body">
+          <table class="table" id="upcomingReservations">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="7" class="loading">Loading reservations...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="card mt-4">
+        <div class="card-header">
+          <h2>Quick Actions</h2>
+        </div>
+        <div class="card-body">
+          <div class="quick-actions">
+            <a href="reservation.html" class="btn btn-primary">🛏️ Book a Room</a>
+            <button class="btn btn-secondary" id="updateProfileBtn">🙍 Update Profile</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+    <!-- Scripts -->
+  <script src="js/dashboard_customer.js"></script>
+</body>
+</html>
